@@ -1,8 +1,13 @@
 package psp.clientecalculadora;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.Socket;
+import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,6 +23,13 @@ public class GraficoCalculadora extends javax.swing.JFrame {
     
     double var1, var2, resultadoTotal;
     boolean sumando, restando, multiplicando, dividiendo;
+    InputStream is;
+    OutputStream os;
+    Socket clienteSocket;
+    InetSocketAddress addr;
+    String mensaje;
+    Scanner sc;
+    byte[] retorno;
 
     /**
      * Creates new form GraficoCalculadora
@@ -26,11 +38,11 @@ public class GraficoCalculadora extends javax.swing.JFrame {
         initComponents();
     }
     
-    public static void conectaServer() throws IOException{
+    public void conectaServer() throws IOException{
             System.out.println("Creando ClienteSocket");
-            Socket clienteSocket = new Socket();
+            clienteSocket = new Socket();
             System.out.println("Estableciendo la conexión");
-            InetSocketAddress addr = new InetSocketAddress("localhost", 5555);
+            addr = new InetSocketAddress("localhost", 5555);
             clienteSocket.connect(addr);
             System.out.println("Conexión establecida con éxito");
             System.out.println("Mostrando Calculadora");
@@ -314,7 +326,8 @@ public class GraficoCalculadora extends javax.swing.JFrame {
     }//GEN-LAST:event_num9ActionPerformed
 
     private void resultadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resultadoActionPerformed
-        // boton resultado realiza ya el calculo de las operaciones deseadas
+
+            // boton resultado realiza ya el calculo de las operaciones deseadas
         var2=(Double.parseDouble(String.valueOf(pantalla.getText())));
         if(sumando==true){
             resultadoTotal=var1+var2;
@@ -341,6 +354,7 @@ public class GraficoCalculadora extends javax.swing.JFrame {
             var2=0;
             dividiendo=false;
         }
+
 
     }//GEN-LAST:event_resultadoActionPerformed
 
